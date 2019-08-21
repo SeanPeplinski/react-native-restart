@@ -40,7 +40,7 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
         });
     }
 
-    private void loadBundle(boolean forceLegacy) {
+    private void loadBundle(final boolean forceLegacy) {
         clearLifecycleEventListener();
         try {
             final ReactInstanceManager instanceManager = resolveInstanceManager();
