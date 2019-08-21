@@ -40,7 +40,7 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
         });
     }
 
-    private void loadBundle() {
+    private void loadBundle(boolean forceLegacy) {
         clearLifecycleEventListener();
         try {
             final ReactInstanceManager instanceManager = resolveInstanceManager();
@@ -52,7 +52,10 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
                 @Override
                 public void run() {
                     try {
-                        instanceManager.recreateReactContextInBackground();
+                        if (forceLegacy)
+                            loadBundleLegacy();
+                        else
+                            instanceManager.recreateReactContextInBackground();
                     } catch (Exception e) {
                         loadBundleLegacy();
                     }
@@ -100,8 +103,8 @@ public class ReactNativeRestart extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void Restart() {
-        loadBundle();
+    public void Restart(boolean forceLegacy) {
+        loadBundle(forceLegacy);
     }
 
     @Override
